@@ -1,8 +1,9 @@
 import React from "react";
+import "../Css/CreateTodoButton.css"
 
 function CreateTodoButton(props){
 	return(
-		<button>+
+		<button className="CreateTodoButton">+
 		</button>
 	);
 }
