@@ -16,37 +16,21 @@ class Componente extends React.Component{
 	}
 }
 */
-function TodoSearch(){
-	// const [patito, setPatito] = React.useState("Joaquin");
-	const [searchValue, setSearchValue] = React.useState('');
-
+function TodoSearch({ searchValue, setSearchValue }){
 	const onSearchValueChange = (event) => {
-		// console.log(event)
 		console.log(event.target.value)
 		setSearchValue(event.target.value)
 	}
 
-	// Se puede retornar un array
-/*	return[
-		<input 
-			className="TodoSearch" 
-			type="text" 
-			placeholder="Cebolla" 
-			onChange={() => setPatito("Enrique")}
-		/>,
-		<p>{patito}</p>
-	];*/
-
-	return[
+	return(
 		<input 
 			className="TodoSearch" 
 			type="text" 
 			placeholder="Cebolla" 
 			value={searchValue}
 			onChange={onSearchValueChange}
-		/>,
-		<p>{searchValue}</p>
-	]
+		/>
+	)
 }
 
 export { TodoSearch };
