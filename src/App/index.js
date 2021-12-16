@@ -1,19 +1,27 @@
 import React from "react";
 import { AppUI } from "./AppUI";
 
-const defaultTodos = [
-  {text: 'Cortar Cebolla', completed: false},
-  {text: 'Tomar el Curso a React', completed: false},
-  {text: 'Llorar con la llorona', completed: false},
-  {text: 'LALALALALLallallalala', completed: false},
-]
+// const parsedTodos = [
+//   {text: 'Cortar Cebolla', completed: false},
+//   {text: 'Tomar el Curso a React', completed: false},
+//   {text: 'Llorar con la llorona', completed: false},
+//   {text: 'LALALALALLallallalala', completed: false},
+// ]
 
 function App(props) {
   // puedo mandar un array vacio tambien 
 
+  const localStorageTodos = localStorage.getItem('TODOS_V1');
+  let parsedTodos;
+  if(!localStorageTodos){
+    localStorage.setItem('TODOS_V1', JSON.stringify([]));
+    parsedTodos = [];
+  }else {
+    parsedTodos = JSON.parse(localStorageTodos)
+  }
   
   const [todoItem, setTodoItem] = React.useState()
-  const [todos, setTodos] = React.useState(defaultTodos)
+  const [todos, setTodos] = React.useState(parsedTodos)
   
   const [searchValue, setSearchValue] = React.useState('');
   
@@ -33,7 +41,12 @@ function App(props) {
   }
   
   // setTodoItem(todos[0])
-
+ 
+  const saveTodos = (newTodos) => {
+    const stringifiedTodos =  JSON.stringify(newTodos);
+    localStorage.setItem('TODOS_V1', stringifiedTodos);
+    setTodos(newTodos);   
+  };
 
   // Creando la funcion para que al dar check se tache de la lista la tarea
 
@@ -57,7 +70,7 @@ function App(props) {
     newTodos[todoIndex].completed = completed
     
     // Actualizamos el estado, para actualizar la lista de todos y asi avisar a todos nuestros componentes
-    setTodos(newTodos)
+    saveTodos(newTodos)
 
   };
 const deleteTodo = (text) => {
@@ -66,7 +79,7 @@ const deleteTodo = (text) => {
     
     const newTodos = [...todos];
     newTodos.splice(todoIndex, 1);
-    setTodos(newTodos)
+    saveTodos(newTodos)
   };
 
 
