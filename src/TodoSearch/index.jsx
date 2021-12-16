@@ -1,5 +1,5 @@
 import React from "react";
-import "../Css/TodoSearch.css"
+import "./TodoSearch.css"
 
 /* Antes 
 class Componente extends React.Component{

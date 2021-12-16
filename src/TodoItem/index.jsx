@@ -1,5 +1,5 @@
-import React, { useDebugValue } from "react";
-import "../Css/TodoItem.css"
+import React from "react";
+import "./TodoItem.css"
 
 function TodoItem(props) {
 
