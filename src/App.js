@@ -65,6 +65,44 @@ function App(props) {
     }
     
     // setTodoItem(todos[0])
+
+
+    // Creando la funcion para que al dar check se tache de la lista la tarea
+
+    const completeTodo = (text) => {
+      const todoIndex = todos.findIndex(todo => todo.text === text);
+      
+      const newTodos = [...todos];
+      let completed = newTodos[todoIndex].completed;
+      // otra forma de acceder a la propiedad completed
+      // todos[todoIndex] = {
+      //   text: todos[todoIndex].text,
+      //   completed: true,
+      // };
+      
+      if(!completed){
+        completed = true
+      } else {
+        completed = false
+      }
+
+      newTodos[todoIndex].completed = completed
+      
+      // Actualizamos el estado, para actualizar la lista de todos y asi avisar a todos nuestros componentes
+      setTodos(newTodos)
+
+    };
+
+    const deleteTodo = (text) => {
+      
+      const todoIndex = todos.findIndex(todo => todo.text === text);
+      
+      const newTodos = [...todos];
+      newTodos.splice(todoIndex, 1);
+      setTodos(newTodos)
+    };
+
+
     return (
       <React.Fragment>
       {/*
@@ -86,10 +124,14 @@ function App(props) {
           <TodoItem 
             // todoItem ={todoItem} 
             // setTodoItem ={setTodoItem}
-            item = {todo}
             key = {todo.text} 
             text={todo.text}
             completed = {todo.completed}
+            onComplete = {() => {
+              // USamos una arrow function porque vamos a llamar a otra función
+              completeTodo(todo.text)
+            }}
+            onDelete = {() => deleteTodo(todo.text)}
           />
         ))}
       </TodoList>
