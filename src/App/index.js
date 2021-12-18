@@ -8,26 +8,49 @@ import { AppUI } from "./AppUI";
 //   {text: 'LALALALALLallallalala', completed: false},
 // ]
 
-function App(props) {
-  // puedo mandar un array vacio tambien 
-
-  const localStorageTodos = localStorage.getItem('TODOS_V1');
-  let parsedTodos;
-  if(!localStorageTodos){
-    localStorage.setItem('TODOS_V1', JSON.stringify([]));
-    parsedTodos = [];
+function useLocalStorage(itemName, initialValue) {
+  const localStorageItem = localStorage.getItem(itemName);
+  
+  let parsedItem;
+  
+  
+  
+  if(!localStorageItem){
+    localStorage.setItem(itemName, JSON.stringify(initialValue));
+    parsedItem = initialValue;
   }else {
-    parsedTodos = JSON.parse(localStorageTodos)
+    parsedItem = JSON.parse(localStorageItem)
   }
   
+  
+  const [item, setItem] = React.useState(parsedItem)
+  
+  const saveItem = (newItem) => {
+    const stringifiedItem =  JSON.stringify(newItem);
+    localStorage.setItem(itemName, stringifiedItem);
+    setItem(newItem);   
+  };
+
+  return [
+    item,
+    saveItem,
+  ];
+}
+
+function App(props) {
+  // probando useLocalStorage
+  const [patito, savePatito] = useLocalStorage('PATITO_V1','FERNANDO');
+  // puedo mandar un array vacio tambien 
+
+  const [todos, saveTodos] = useLocalStorage('TODO_V1',[]);
+  // const [name, saveName] = useLocalStorage('NOMBREULTRAIMPORTANTE','Fernando');
   const [todoItem, setTodoItem] = React.useState()
-  const [todos, setTodos] = React.useState(parsedTodos)
   
   const [searchValue, setSearchValue] = React.useState('');
   
   const completedTodos = todos.filter(todo => !!todo.completed).length;
   const totalTodos = todos.length;
-    
+  
   let searchedTodos = [];
   
   if(!searchValue.length >= 1){
@@ -42,12 +65,7 @@ function App(props) {
   
   // setTodoItem(todos[0])
  
-  const saveTodos = (newTodos) => {
-    const stringifiedTodos =  JSON.stringify(newTodos);
-    localStorage.setItem('TODOS_V1', stringifiedTodos);
-    setTodos(newTodos);   
-  };
-
+  
   // Creando la funcion para que al dar check se tache de la lista la tarea
 
   const completeTodo = (text) => {
@@ -83,7 +101,8 @@ const deleteTodo = (text) => {
   };
 
 
-  return (
+  return [
+    <p>{patito}</p>,
     <AppUI
       totalTodos={totalTodos}
       completedTodos={completedTodos}
@@ -92,8 +111,9 @@ const deleteTodo = (text) => {
       searchedTodos={searchedTodos}
       completeTodo= {completeTodo}
       deleteTodo= {deleteTodo}
-    />
-  );
+    />,
+
+  ];
 }
 
 export default App;
