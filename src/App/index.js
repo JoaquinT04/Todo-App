@@ -9,40 +9,66 @@ import { AppUI } from "./AppUI";
 // ]
 
 function useLocalStorage(itemName, initialValue) {
-  const localStorageItem = localStorage.getItem(itemName);
-  
-  let parsedItem;
-  
-  
-  
-  if(!localStorageItem){
-    localStorage.setItem(itemName, JSON.stringify(initialValue));
-    parsedItem = initialValue;
-  }else {
-    parsedItem = JSON.parse(localStorageItem)
-  }
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(false);
+
+  const [item, setItem] = React.useState(initialValue);
   
   
-  const [item, setItem] = React.useState(parsedItem)
+  React.useEffect(()=>{
+    // Vamos a simular que estamos trayendo información de una API
+    setTimeout(() => {
+      try{
+        const localStorageItem = localStorage.getItem(itemName);
+    
+        let parsedItem;  
+        
+        if(!localStorageItem){
+          localStorage.setItem(itemName, JSON.stringify(initialValue));
+          parsedItem = initialValue;
+        }else {
+          parsedItem = JSON.parse(localStorageItem)
+        }
+  
+        setItem(parsedItem);
+        setLoading(false);
+      } catch(e){
+
+        setError(error)
+      }
+    }, 1000);
+  })
   
   const saveItem = (newItem) => {
-    const stringifiedItem =  JSON.stringify(newItem);
-    localStorage.setItem(itemName, stringifiedItem);
-    setItem(newItem);   
+    try {
+      const stringifiedItem =  JSON.stringify(newItem);
+      localStorage.setItem(itemName, stringifiedItem);
+      setItem(newItem);   
+      
+    } catch (error) {
+      setError(error)    
+    }
   };
 
-  return [
+  // para retornar más de tres cosas, usaremos un objeto
+
+  return {
     item,
     saveItem,
-  ];
+    loading,
+    error,
+  };
 }
 
 function App(props) {
-  // probando useLocalStorage
-  const [patito, savePatito] = useLocalStorage('PATITO_V1','FERNANDO');
   // puedo mandar un array vacio tambien 
-
-  const [todos, saveTodos] = useLocalStorage('TODO_V1',[]);
+  const {
+    item: todos,
+    saveItem: saveTodos,
+    loading,
+    error,
+  } = useLocalStorage('TODO_V1',[]);
+  
   // const [name, saveName] = useLocalStorage('NOMBREULTRAIMPORTANTE','Fernando');
   const [todoItem, setTodoItem] = React.useState()
   
@@ -101,9 +127,21 @@ const deleteTodo = (text) => {
   };
 
 
-  return [
-    <p>{patito}</p>,
+  /* React.useEffect(Primer argumento: una función para encapsular todo el codigo que querramos ejecutar justo antes de el Render, osea cuando ya reacto termino de hacer todos sus calculos internos. , Segundo argumento: un array que nos permite definir cuando debemos usar nuestro useEffect, es decir que sin importar la cantidad de veces que se renderize nuestro componente. Si enviamos un array vacio nuestro efecto se va a ejecutar solo una vez, la primera vez que se renderize nuestro componente. Tambien podemos escuchar desde nuestro efecto todas las veces que haya cambios en las variables o lo que sea que le pasemos a dicho array ); 
+  
+  console.log("Render antes del useEffect");
+  
+  React.useEffect(()=>{
+    console.log("aqui llamammos al codigo de useEffect");
+  }, [totalTodos]);
+
+  console.log("Render luego del useEffect");
+  */
+  
+  return (
     <AppUI
+      loading={loading}
+      error={error}
       totalTodos={totalTodos}
       completedTodos={completedTodos}
       searchValue={searchValue}
@@ -111,9 +149,8 @@ const deleteTodo = (text) => {
       searchedTodos={searchedTodos}
       completeTodo= {completeTodo}
       deleteTodo= {deleteTodo}
-    />,
-
-  ];
+    />
+  );
 }
 
 export default App;
