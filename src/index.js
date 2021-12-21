@@ -8,3 +8,10 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
+
+
+// ReactDOM.createPortal(
+//   // Aqui podemos enviar cualquier otro componente
+//   <App />,
+//   document.getElementById('modal')
+// );

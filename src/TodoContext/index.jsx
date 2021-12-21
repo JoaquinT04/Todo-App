@@ -19,7 +19,10 @@ function TodoProvider(props){
 	
 	// const [name, saveName] = useLocalStorage('NOMBREULTRAIMPORTANTE','Fernando');
 	const [todoItem, setTodoItem] = React.useState()
-	
+
+	// EStado para el Modal
+	const[openModal, setOpenModal] = React.useState(false);
+
 	const [searchValue, setSearchValue] = React.useState('');
 	
 	const completedTodos = todos.filter(todo => !!todo.completed).length;
@@ -80,6 +83,8 @@ function TodoProvider(props){
       searchedTodos,
       completeTodo,
       deleteTodo,
+			openModal,
+			setOpenModal,
 		}}>
 			{/* Hay que decirle al provider cual  */}
 			{/* aqui estara cualquier componente que llame a TodoProvider, y estos componentes podran usar nuestro consumidor */}
