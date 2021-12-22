@@ -3,9 +3,13 @@ import { TodoContext } from "../TodoContext";
 import {TodoCounter} from "../TodoCounter"
 import {TodoSearch} from "../TodoSearch"
 import {TodoItem} from "../TodoItem"
+import { TodoForm } from "../TodoForm";
 import {TodoList} from "../TodoList"
 import {CreateTodoButton} from "../CreateTodoButton"
 import { Modal } from "../Modal";
+import { TodosError } from "../TodosError";
+import { TodosLoading } from "../TodosLoading";
+import { EmptyTodos } from "../EmptyTodos";
 
 
 
@@ -25,9 +29,9 @@ function AppUI() {
     <TodoCounter />
     <TodoSearch />
     <TodoList>
-      {error && <p>Desesperate, hubo un error ...</p>}
-      {loading && <p>Estamos cargando, no desesperes ...</p>}
-      {(!loading && !searchedTodos.length) && <p>Crea tu primer TODO!!!</p>}
+      {error && <TodosError error={error}/>}
+      {loading && <TodosLoading />}
+      {(!loading && !searchedTodos.length) && <EmptyTodos/>}
       {searchedTodos.map(todo => (
         <TodoItem 
           // todoItem ={todoItem} 
@@ -47,16 +51,16 @@ function AppUI() {
     {/* {openModal} esto va a ser tru si existe openModal, que en este caso siempre existe, por eso usamos la condición de abajo para preguntar si el valor de openModal es true */}
     {!!openModal && (
       <Modal>
-        <p>{searchedTodos[0]?.text}</p>
+        <TodoForm/>
+        {/* Mi solución al reto 
         <CreateTodoButton 
           openModal={openModal}
           setOpenModal={setOpenModal}
-        />
+        /> */}
       </Modal>
     )}
     
     <CreateTodoButton 
-      openModal={openModal}
       setOpenModal={setOpenModal}
     />
 

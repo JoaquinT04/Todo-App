@@ -1,13 +1,20 @@
 import React from "react";
 import "./CreateTodoButton.css"
 
-function CreateTodoButton({setOpenModal, openModal}){
+function CreateTodoButton({
+		setOpenModal,
+		// openModal
+	}){
 	const onClickButton= () => {
-		if(!openModal){
-			setOpenModal(true);
-		}else{
-			setOpenModal(false);
-		}
+		// mi solución al reto 
+		// if(!openModal){
+		// 	setOpenModal(true);
+		// }else{
+		// 	setOpenModal(false);
+		// }
+		
+		// SOLUCIÓN DEL PROFE
+		setOpenModal(prevState => !prevState)
 	}
 
 	return(

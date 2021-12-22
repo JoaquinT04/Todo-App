@@ -43,6 +43,17 @@ function TodoProvider(props){
 	
 	// Creando la funcion para que al dar check se tache de la lista la tarea
 
+	const addTodo = (text) => {
+		const newTodos = [...todos];
+		
+		newTodos.push({
+			completed: false,
+			text
+		});
+		
+		saveTodos(newTodos)
+	};
+
 	const completeTodo = (text) => {
 		const todoIndex = todos.findIndex(todo => todo.text === text);
 		
@@ -82,6 +93,7 @@ function TodoProvider(props){
       setSearchValue,
       searchedTodos,
       completeTodo,
+			addTodo,
       deleteTodo,
 			openModal,
 			setOpenModal,
