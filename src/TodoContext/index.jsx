@@ -17,8 +17,6 @@ function TodoProvider(props){
 		error,
 	} = useLocalStorage('TODOS_V1',[]);
 	
-	// const [name, saveName] = useLocalStorage('NOMBREULTRAIMPORTANTE','Fernando');
-	// const [todoItem, setTodoItem] = React.useState()
 
 	// EStado para el Modal
 	const[openModal, setOpenModal] = React.useState(false);
