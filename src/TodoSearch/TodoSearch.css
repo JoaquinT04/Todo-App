@@ -1,3 +1,20 @@
+.InputSearch{
+  height: 140px;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.todoSearchLabel{
+  align-self: center;
+  height: 24px;
+  width: calc(100% - 62px);
+  color: white;
+  font-size: 24px;
+}
+
+
 .TodoSearch {
   background: #F9FBFC;
   border-radius: 2px;

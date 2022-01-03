@@ -10,13 +10,17 @@ function TodoSearch(){
 	}
 
 	return(
-		<input 
-			className="TodoSearch" 
-			type="text" 
-			placeholder="Cebolla" 
-			value={searchValue}
-			onChange={onSearchValueChange}
-		/>
+		<div className="InputSearch">
+			<label className="todoSearchLabel" htmlFor="todoSearch">Buscar Tarea</label>
+			<input 
+				id="todoSearch"
+				className="TodoSearch" 
+				type="text" 
+				placeholder="Cebolla" 
+				value={searchValue}
+				onChange={onSearchValueChange}
+			/>
+		</div>
 	)
 }
 

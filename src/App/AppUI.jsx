@@ -6,11 +6,11 @@ import {TodoItem} from "../TodoItem"
 import { TodoForm } from "../TodoForm";
 import {TodoList} from "../TodoList"
 import {CreateTodoButton} from "../CreateTodoButton"
+import { TodoNoChecked } from "../TodoNoChecked";
 import { Modal } from "../Modal";
 import { TodosError } from "../TodosError";
 import { TodosLoading } from "../TodosLoading";
 import { EmptyTodos } from "../EmptyTodos";
-
 
 
 function AppUI() {
@@ -22,17 +22,37 @@ function AppUI() {
     deleteTodo,
     openModal,
     setOpenModal,
+    noCheckedTodos,
+    todosNoChecked,
   } = React.useContext(TodoContext);
 
 	return (
   <React.Fragment>
     <TodoCounter />
     <TodoSearch />
+    <TodoNoChecked />
     <TodoList>
       {error && <TodosError error={error}/>}
       {loading && <TodosLoading />}
       {(!loading && !searchedTodos.length) && <EmptyTodos/>}
-      {searchedTodos.map(todo => (
+      {/* /**** */}
+      
+      {!todosNoChecked && searchedTodos.map(todo => (
+        <TodoItem 
+          // todoItem ={todoItem} 
+          // setTodoItem ={setTodoItem}
+          key = {todo.text} 
+          text={todo.text}
+          completed = {todo.completed}
+          onComplete = {() => {
+            // USamos una arrow function porque vamos a llamar a otra función
+            completeTodo(todo.text)
+          }}
+          onDelete = {() => deleteTodo(todo.text)}
+        />
+      ))}
+
+      {todosNoChecked && noCheckedTodos.map(todo => (
         <TodoItem 
           // todoItem ={todoItem} 
           // setTodoItem ={setTodoItem}

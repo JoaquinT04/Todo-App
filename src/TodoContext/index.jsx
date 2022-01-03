@@ -21,6 +21,8 @@ function TodoProvider(props){
 	// EStado para el Modal
 	const[openModal, setOpenModal] = React.useState(false);
 
+	const [todosNoChecked, setTodosNoChecked] = React.useState(false)
+
 	const [searchValue, setSearchValue] = React.useState('');
 	
 	const completedTodos = todos.filter(todo => !!todo.completed).length;
@@ -38,6 +40,11 @@ function TodoProvider(props){
 		});
 	}
 	
+	let noCheckedTodos = []
+	noCheckedTodos = todos.filter(todo=>{
+		return todo.completed === false
+	})
+
 	
 	// Creando la funcion para que al dar check se tache de la lista la tarea
 
@@ -95,6 +102,9 @@ function TodoProvider(props){
       deleteTodo,
 			openModal,
 			setOpenModal,
+			noCheckedTodos,
+			todosNoChecked,
+			setTodosNoChecked,
 		}}>
 			{/* Hay que decirle al provider cual  */}
 			{/* aqui estara cualquier componente que llame a TodoProvider, y estos componentes podran usar nuestro consumidor */}
@@ -104,10 +114,6 @@ function TodoProvider(props){
 }
 
 
-{/* <Provider></Provider>
-<Consumer></Consumer> */}
 
 
 export { TodoContext, TodoProvider };
-
-

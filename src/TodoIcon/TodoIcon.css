@@ -14,13 +14,13 @@
 
 .Icon-container--delete{
 	position: absolute;
-	top: 20px;
+	top: -20px;
 	right: 0;
 }
 
 .Icon-svg{
-	width: 24px;
-	height: 24px;
+	width: 30px;
+	height: 30px;
 	transition: fill .15s;
 } 
 
